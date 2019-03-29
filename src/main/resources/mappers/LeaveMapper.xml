@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.record.dao.LeaveDao">
+    <resultMap id="leaveMap" type="com.attendance.record.domain.Leave">
+        <result column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="reason" property="reason"/>
+        <result column="employee_num" property="employeeNum"/>
+        <result column="real_name" property="realName"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="day_count" property="dayCount"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <sql id="base_column">
+        id, type, reason, employee_num, real_name, start_date, end_date, day_count, state
+    </sql>
+    <insert id="insertLeave" parameterType="com.attendance.record.domain.Leave">
+        insert into leavedata(<include refid="base_column"/>) values (#{id}, #{type}, #{reason}, #{employeeNum}, #{realName}, #{startDate}, #{endDate}, #{dayCount}, #{state});
+    </insert>
+    <select id="selectLeaveById" resultMap="leaveMap">
+        select <include refid="base_column"/> from leavedata where id=#{id};
+    </select>
+    <select id="selectLeavesByEmployeeNum" resultMap="leaveMap">
+        select <include refid="base_column"/> from leavedata where employee_num=#{employeeNum};
+    </select>
+</mapper>

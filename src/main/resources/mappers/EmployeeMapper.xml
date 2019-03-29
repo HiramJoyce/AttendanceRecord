@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.record.dao.EmployeeDao">
+    <resultMap id="employeeMap" type="com.attendance.record.domain.Employee">
+        <result column="id" property="id"/>
+        <result column="employee_num" property="employeeNum"/>
+        <result column="real_name" property="realName"/>
+        <result column="img" property="img"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+    </resultMap>
+    <sql id="base_column">
+        id, employee_num, real_name, img, gender, email, phone, password
+    </sql>
+    <insert id="insertEmployee" parameterType="com.attendance.record.domain.Employee">
+        insert into employee(<include refid="base_column"/>) values (#{id}, #{employeeNum}, #{realName}, #{img}, #{gender}, #{email}, #{phone}, #{password});
+    </insert>
+    <select id="selectEmployeeByEmployeeNum" resultMap="employeeMap">
+        select <include refid="base_column"/> from employee where employee_num=#{employeeNum};
+    </select>
+</mapper>
