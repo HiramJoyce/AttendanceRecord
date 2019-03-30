@@ -60,7 +60,7 @@
 							<label>登录密码</label>
 							<input type="password" name="password" autocomplete="current-password" class="lowin-input">
 						</div>
-						<button class="lowin-btn">
+						<button type="submit" class="lowin-btn">
 							注册
 						</button>
 						<div class="text-foot">

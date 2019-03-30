@@ -39,6 +39,7 @@ public class EmployeeController {
         System.out.println("-> employee -> login -> " + employee);
         Employee employeeDB = employeeService.loginCheck(employee);
         if (employeeDB != null) {
+            System.out.println("login -> success");
             session.setAttribute("id", employeeDB.getId());
             session.setAttribute("employeeNum", employeeDB.getEmployeeNum());
             session.setAttribute("realName", employeeDB.getRealName());
@@ -49,14 +50,15 @@ public class EmployeeController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(Employee employee, HttpSession session) {
-        if (employee.getEmployeeNum() == null) {
+    	System.out.println("employee -> register " + employee);
+        if (employee.getId() == null) {
             if (employeeService.registerCheck(employee)) {
                 employee.setId(UUID.randomUUID().toString().replaceAll("-", ""));
                 if (employeeService.register(employee) != null) {
                     session.setAttribute("id", employee.getId());
                     session.setAttribute("employeeNum", employee.getEmployeeNum());
                     session.setAttribute("realName", employee.getRealName());
-                    return "admin/index";
+                    return "redirect:/employee";
                 }
             }
         } else {
