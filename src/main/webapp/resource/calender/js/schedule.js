@@ -66,13 +66,13 @@
 		}
 		var init = function() {
 			var scheduleHd = '<div class="schedule-hd">' +
-				'<div>' +
-				'<span class="arrow icon iconfont icon-112leftarrowhead" id="prevMonth"></span>' +
-				'</div>' +
+				// '<div>' +
+				// '<span class="arrow icon iconfont icon-112leftarrowhead" id="prevMonth"></span>' +
+				// '</div>' +
 				'<div class="today">' + year + "年" + (month + 1) + "月" + '</div>' +
-				'<div>' +
-				'<span class="arrow icon iconfont icon-111arrowheadright" id="nextMonth"></span>' +
-				'</div>' +
+				// '<div>' +
+				// '<span class="arrow icon iconfont icon-111arrowheadright" id="nextMonth"></span>' +
+				// '</div>' +
 				'</div>'
 			var scheduleWeek = '<ul class="week-ul ul-box clearfix">' +
 				'<li>日</li>' +
@@ -113,7 +113,7 @@
 						qqDate[z].time == nowDate && (addClass = 'qq-style', Morning = qqDate[z].Morning, Afternoon = qqDate[z].Afternoon);
 					}
 					//					formartDate(currentYear,currentMonth+1,currentDay,'-') == nowDate && (addClass = 'today-flag');
-					eleTemp.push('<li class="current-month" ><span  class="currentDate dayStyle ' + addClass + '">' + (i + 1 - startWeek) + '</span><div class="day_time"><div>上班：' + Morning + '</div><div>下班：' + Afternoon + '</div></li>')
+					eleTemp.push('<li class="current-month" ><span  class="currentDate dayStyle ' + addClass + '">' + (i + 1 - startWeek) + '</span></li>')
 				} else {
 					eleTemp.push('<li class="other-month"><span class="dayStyle">' + (i + 1 - (startWeek + fullDay)) + '</span></li>')
 				}
