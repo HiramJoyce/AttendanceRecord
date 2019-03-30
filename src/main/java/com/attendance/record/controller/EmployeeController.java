@@ -1,5 +1,6 @@
 package com.attendance.record.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.attendance.record.domain.Employee;
 import com.attendance.record.domain.Leave;
 import com.attendance.record.service.EmployeeService;
@@ -28,6 +29,8 @@ public class EmployeeController {
         List<Leave> leaves = leaveService.getMyLeaves((String) session.getAttribute("employeeNum"));
         System.out.println(leaves);
         model.addAttribute("leaves", leaves);
+        JSONObject records = leaveService.getAttendanceRecord((String) session.getAttribute("employeeNum"));
+        model.addAttribute("records", records);
         return "admin/index";
     }
 
@@ -46,14 +49,29 @@ public class EmployeeController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(Employee employee, HttpSession session) {
-        if (employeeService.registerCheck(employee)) {
-            employee.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-            if (employeeService.register(employee) != null) {
-                session.setAttribute("id", employee.getId());
-                session.setAttribute("realName", employee.getRealName());
-                return "admin/index";
+        if (employee.getEmployeeNum() == null) {
+            if (employeeService.registerCheck(employee)) {
+                employee.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+                if (employeeService.register(employee) != null) {
+                    session.setAttribute("id", employee.getId());
+                    session.setAttribute("employeeNum", employee.getEmployeeNum());
+                    session.setAttribute("realName", employee.getRealName());
+                    return "admin/index";
+                }
             }
+        } else {
+            employeeService.updateEmployee(employee);
+            session.setAttribute("id", employee.getId());
+            session.setAttribute("employeeNum", employee.getEmployeeNum());
+            session.setAttribute("realName", employee.getRealName());
+            return "redirect:/employee/profile";
         }
         return "redirect:/";
+    }
+
+    @RequestMapping("profile")
+    public String profile(Model model, HttpSession session) {
+        model.addAttribute("employee", employeeService.getEmployeeByEmployeeNum((String) session.getAttribute("employeeNum")));
+        return "admin/profile";
     }
 }

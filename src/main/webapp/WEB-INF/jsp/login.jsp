@@ -34,6 +34,7 @@
 						</button>
 						<div class="text-foot">
 							还没有账户? <a href="" class="register-link">注册</a>
+                            <div><a href="${ctx}/boss/login">我是管理员</a></div>
 						</div>
 					</form>
 				</div>

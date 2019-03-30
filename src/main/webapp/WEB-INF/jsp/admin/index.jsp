@@ -95,27 +95,27 @@
                                 <div class="index_liBRight"></div>
                                 <div class="index_frame_leftBottom_bottom clearfix">
                                     <div>
-                                        <span>1</span>
+                                        <span>${records.type1}</span>
                                         <span>病假</span>
                                     </div>
                                     <div>
-                                        <span>0</span>
+                                        <span>${records.type2}</span>
                                         <span>事假</span>
                                     </div>
                                     <div>
-                                        <span>2</span>
+                                        <span>${records.type3}</span>
                                         <span>年假</span>
                                     </div>
                                     <div>
-                                        <span>3</span>
+                                        <span>${records.type4}</span>
                                         <span>调休</span>
                                     </div>
                                     <div>
-                                        <span>0</span>
+                                        <span>${records.type5}</span>
                                         <span>婚/丧假</span>
                                     </div>
                                     <div>
-                                        <span>0</span>
+                                        <span>${records.type6}</span>
                                         <span>产假/护理假</span>
                                     </div>
                                 </div>
@@ -139,6 +139,7 @@
                                             <th>结束日</th>
                                             <th>天数</th>
                                             <th>状态</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -147,10 +148,42 @@
                                                 <td class="serial">${statu.index + 1}</td>
                                                 <td>${leave.realName}</td>
                                                 <td><span class="name">${leave.employeeNum}</span></td>
-                                                <td><span class="product"><f:formatDate value="${leave.startDate}" pattern="yyyy-MM-dd"/></span></td>
-                                                <td><span class="product"><f:formatDate value="${leave.endDate}" pattern="yyyy-MM-dd"/></span></td>
-                                                <td><span class="count">${leave.dayCount}</span></td>
-                                                <td><span class="badge badge-complete">${leave.state}</span></td>
+                                                <td><span class="product"><f:formatDate value="${leave.startDate}"
+                                                                                        pattern="yyyy-MM-dd"/></span>
+                                                </td>
+                                                <td><span class="product"><f:formatDate value="${leave.endDate}"
+                                                                                        pattern="yyyy-MM-dd"/></span>
+                                                </td>
+                                                <td><span>${leave.dayCount}</span></td>
+                                                <td><span
+                                                        class="badge ${leave.state == 1 ? "badge-info" : "badge-complete"}">${leave.state == 1 ? "申请中" : "已批准"}</span>
+                                                </td>
+                                                <td style="text-align: left;">
+                                                    <c:if test="${leave.state == 1}">
+                                                        <button onclick="window.location.href='${ctx}/leave/apply?id=${leave.id}&see=1'"
+                                                                type="button" class="btn btn-info btn-sm btn-block"
+                                                                style="width: auto; margin: 0;">
+                                                            查看
+                                                        </button>
+                                                        <button onclick="window.location.href='${ctx}/leave/apply?id=${leave.id}'"
+                                                                type="button" class="btn btn-warning btn-sm btn-block"
+                                                                style="width: auto; margin: 0;">
+                                                            修改
+                                                        </button>
+                                                        <button onclick="window.location.href='${ctx}/leave/callback?id=${leave.id}'"
+                                                                type="button" class="btn btn-danger btn-sm btn-block"
+                                                                style="width: auto; margin: 0;">
+                                                            撤销
+                                                        </button>
+                                                    </c:if>
+                                                    <c:if test="${leave.state == 2}">
+                                                        <button onclick="window.location.href='${ctx}/leave/apply?id=${leave.id}&see=1'"
+                                                                type="button" class="btn btn-info btn-sm btn-block"
+                                                                style="width: auto; margin: 0;">
+                                                            查看
+                                                        </button>
+                                                    </c:if>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -176,57 +209,9 @@
     var mySchedule = new Schedule({
         el: '#schedule-boxS',
         //异常考勤
-        qqDate: [{time: "2018-11-09", Morning: "", Afternoon: "16:01"}, {
-            time: "2018-11-16",
-            Morning: "08:15",
-            Afternoon: ""
-        }, {time: "2018-12-19", Morning: "08:15", Afternoon: ""}],
+        qqDate: ${records.qqDate},
         //正常考勤
-        zcDate: [
-            {time: "2018-11-01", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-02", Morning: "08:15", Afternoon: "16:03"},
-            {time: "2018-11-05", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-06", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-07", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-08", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-12", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-13", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-14", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-15", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-16", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-15", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-19", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-20", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-21", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-22", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-23", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-26", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-27", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-28", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-29", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-11-30", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-03", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-04", Morning: "08:15", Afternoon: "16:03"},
-            {time: "2018-12-05", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-06", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-07", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-10", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-11", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-12", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-13", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-14", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-17", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-18", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-19", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-20", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-21", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-24", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-25", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-26", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-27", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-28", Morning: "08:15", Afternoon: "16:01"},
-            {time: "2018-12-31", Morning: "08:15", Afternoon: "16:01"}
-        ]
+        zcDate: ${records.zcDate}
     })
 </script>
 </body>

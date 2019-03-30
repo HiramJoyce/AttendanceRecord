@@ -26,4 +26,25 @@
     <select id="selectLeavesByEmployeeNum" resultMap="leaveMap">
         select <include refid="base_column"/> from leavedata where employee_num=#{employeeNum};
     </select>
+    <update id="updateLeave" parameterType="com.attendance.record.domain.Leave">
+        update leavedata set type=#{type}, reason=#{reason}, employee_num=#{employeeNum}, real_name= #{realName}, start_date=#{startDate}, end_date=#{endDate}, day_count=#{dayCount}, state=#{state} where id=#{id};
+    </update>
+    <delete id="deleteLeaveById">
+        delete from leavedata where id=#{id};
+    </delete>
+    <select id="selectLeavesByEmployeeNumAndDate" resultMap="leaveMap">
+        select <include refid="base_column"/> from leavedata where employee_num=#{employeeNum} and start_date=#{startDate};
+    </select>
+    <select id="selectLeavesByEmployeeNumMonth" resultMap="leaveMap">
+        select <include refid="base_column"/> from leavedata where employee_num=#{employeeNum} and ((start_date between #{start} and #{end}) or (end_date between #{start} and #{end}));
+    </select>
+    <select id="selectLeavesState" resultMap="leaveMap">
+        select <include refid="base_column"/> from leavedata where state=#{state};
+    </select>
+    <select id="selectLeaves" resultMap="leaveMap">
+        select <include refid="base_column"/> from leavedata;
+    </select>
+    <update id="updateLeaveState">
+        update leavedata set state=#{state} where id=#{id};
+    </update>
 </mapper>

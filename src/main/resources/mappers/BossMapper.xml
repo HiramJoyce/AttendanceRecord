@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.record.dao.BossDao">
+    <resultMap id="bossMap" type="com.attendance.record.domain.Boss">
+        <result column="id" property="id"/>
+        <result column="boss_num" property="bossNum"/>
+        <result column="real_name" property="realName"/>
+        <result column="password" property="password"/>
+    </resultMap>
+    <sql id="base_column">
+        id, boss_num, real_name, password
+    </sql>
+    <select id="selectBossByBossNum" resultMap="bossMap">
+        select <include refid="base_column"/> from boss where boss_num=#{bossNum};
+    </select>
+</mapper>

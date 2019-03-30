@@ -22,4 +22,10 @@
     <select id="selectEmployeeByEmployeeNum" resultMap="employeeMap">
         select <include refid="base_column"/> from employee where employee_num=#{employeeNum};
     </select>
+    <select id="selectAllEmployees" resultMap="employeeMap">
+        select <include refid="base_column"/> from employee;
+    </select>
+    <update id="updateEmployee" parameterType="com.attendance.record.domain.Employee">
+        update employee set employee_num=#{employeeNum}, real_name=#{realName}, img=#{img}, gender=#{gender}, email=#{email}, phone=#{phone}, password=#{password} where employee_num=#{employeeNum}
+    </update>
 </mapper>
