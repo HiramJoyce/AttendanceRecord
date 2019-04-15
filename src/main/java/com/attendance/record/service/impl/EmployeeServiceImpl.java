@@ -47,15 +47,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Map<String, List<Employee>> getEmployeeRecord() {
+	public Map<String, List<Employee>> getEmployeeRecord(Date date) {
 		Map<String, List<Employee>> map = new LinkedHashMap<>();
 		List<Employee> employees = employeeDao.selectAllEmployees();
 		List<Employee> fullEmployees = new ArrayList<>();
 		List<Employee> notFullEmployees = new ArrayList<>();
 		for (Employee employee : employees) {
 			String employeeNum = employee.getEmployeeNum();
-			List<Leave> leaves = leaveService.getLeavesByEmployeeNumMonth(employeeNum,
-					Calendar.getInstance().get(Calendar.MONTH));
+//			List<Leave> leaves = leaveService.getLeavesByEmployeeNumMonth(employeeNum,
+//					Calendar.getInstance().get(Calendar.MONTH));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			List<Leave> leaves = leaveService.getLeavesByEmployeeNumYearMonth(employeeNum,
+					calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
 			if (leaves != null && leaves.size() > 0) {
 				notFullEmployees.add(employee);
 			} else {

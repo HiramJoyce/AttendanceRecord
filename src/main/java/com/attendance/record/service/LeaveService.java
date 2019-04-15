@@ -20,6 +20,8 @@ public interface LeaveService {
     JSONObject getAttendanceRecord(String employeeNum);
 
     List<Leave> getLeavesByEmployeeNumMonth(String employeeNum, int i);
+    
+    List<Leave> getLeavesByEmployeeNumYearMonth(String employeeNum, int year, int month);
 
     List<Leave> getUnckeckLeaves();
 

@@ -2,6 +2,7 @@ package com.attendance.record.service;
 
 import com.attendance.record.domain.Employee;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,5 +17,5 @@ public interface EmployeeService {
 
     int updateEmployee(Employee employee);
 
-    Map<String, List<Employee>> getEmployeeRecord();
+    Map<String, List<Employee>> getEmployeeRecord(Date date);
 }

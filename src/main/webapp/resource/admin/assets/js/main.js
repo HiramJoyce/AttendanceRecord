@@ -4,11 +4,15 @@ jQuery(document).ready(function ($) {
 
     var startDate = $('#startDate');
     var endDate = $('#endDate');
+    var monthDate = $('#monthDate');
     startDate.fdatepicker({
         format: 'yyyy-mm-dd'
     });
     endDate.fdatepicker({
         format: 'yyyy-mm-dd'
+    });
+    monthDate.fdatepicker({
+        format: 'yyyy-mm'
     });
     startDate.change(function () {
         if (endDate.val() != null && endDate.val() !== '') {

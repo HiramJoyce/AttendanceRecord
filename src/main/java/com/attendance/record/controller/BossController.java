@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,12 +34,15 @@ public class BossController {
     private EmployeeService employeeService;
 
     @RequestMapping("")
-    public String index(Model model) {
-        Map<String, List<Employee>> map = employeeService.getEmployeeRecord();
+    public String index(String time, Model model) throws ParseException {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+    	Date date = (time == null || StringUtils.equals(time, "")) ? new Date() : sdf.parse(time);
+        Map<String, List<Employee>> map = employeeService.getEmployeeRecord(date);
         List<Employee> fullEmployees = map.get("fullEmployees");
         List<Employee> notFullEmployees = map.get("notFullEmployees");
         model.addAttribute("fullEmployees", fullEmployees);
         model.addAttribute("notFullEmployees", notFullEmployees);
+        model.addAttribute("month", sdf.format(date));
         return "boss/index";
     }
 

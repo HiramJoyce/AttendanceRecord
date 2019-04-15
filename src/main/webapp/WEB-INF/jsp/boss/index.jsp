@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>${month} 考勤统计</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/normalize.css">
@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/resource/calender/css/index.css"/>
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_234130_nem7eskcrkpdgqfr.css">
+    <link href="${ctx}/resource/datepicker/css/foundation-datepicker.css" rel="stylesheet" type="text/css">
+    <style>
+    @page { margin: 0; }
+    </style>
 </head>
 
 <body>
@@ -78,9 +82,18 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="box-title">考勤记录</h4>
+                                <form action="${ctx}/boss/" method="post">
+                                <div class="input-group" style="width: 200px;">
+                                <input type="text" id="monthDate" value="${month}" autocomplete="off" name="time" placeholder="月份"
+                                               class="form-control" style="width: 100px;">
+                                <button type="submit" class="btn btn-primary btn-sm">查询</button>
+                                <button type="button" class="btn btn-success btn-sm" onclick="doPrint()">打印</button>
+                                </div>
+                                </form>
                             </div>
+                            <!--startprint-->
                             <div class="card-body--">
-                                <p>上月满勤员工</p>
+                                <p style="margin-left: 15px;">满勤员工</p>
                                 <div class="table-stats order-table ov-h">
                                     <table class="table ">
                                         <thead>
@@ -108,7 +121,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <p>上月未满勤员工</p>
+                                <p style="margin-left: 15px;">未满勤员工</p>
                                 <div class="table-stats order-table ov-h">
                                     <table class="table ">
                                         <thead>
@@ -136,6 +149,7 @@
                                     </table>
                                 </div>
                             </div>
+                            <!--endprint-->
                         </div>
                     </div>
                 </div>
@@ -148,5 +162,19 @@
 <script src="${ctx}/resource/admin/assets/js/popper.min.js"></script>
 <script src="${ctx}/resource/admin/assets/js/plugins.js"></script>
 <script src="${ctx}/resource/admin/assets/js/main.js"></script>
+<script src="${ctx}/resource/datepicker/js/foundation-datepicker.js"></script>
+<script src="${ctx}/resource/datepicker/js/locales/foundation-datepicker.zh-CN.js"></script>
+<script>
+	function doPrint() {
+		bdhtml=window.document.body.innerHTML; 
+		sprnstr="<!--startprint-->"; //开始打印标识字符串有17个字符
+		eprnstr="<!--endprint-->"; //结束打印标识字符串
+		prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17); //从开始打印标识之后的内容
+		prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+		window.document.body.innerHTML=prnhtml; //把需要打印的指定内容赋给body.innerHTML
+		window.print(); //调用浏览器的打印功能打印指定区域
+		window.document.body.innerHTML=bdhtml;//重新给页面内容赋值；
+	}
+</script>
 </body>
 </html>

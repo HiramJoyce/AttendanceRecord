@@ -129,6 +129,20 @@ public class LeaveServiceImpl implements LeaveService {
         end.roll(Calendar.DAY_OF_MONTH, -1);
         return leaveDao.selectLeavesByEmployeeNumMonth(employeeNum, start.getTime(), end.getTime());
     }
+    
+    @Override
+    public List<Leave> getLeavesByEmployeeNumYearMonth(String employeeNum, int yearNum, int monthNum) {
+        Calendar start = Calendar.getInstance();
+        start.set(Calendar.YEAR, yearNum);
+        start.set(Calendar.MONTH, monthNum == 0 ? 11 : monthNum);
+        start.set(Calendar.DAY_OF_MONTH, 1);
+        Calendar end = Calendar.getInstance();
+        end.set(Calendar.YEAR, yearNum);
+        end.set(Calendar.MONTH, monthNum == 0 ? 11 : monthNum);
+        end.set(Calendar.DAY_OF_MONTH, 1);
+        end.roll(Calendar.DAY_OF_MONTH, -1);
+        return leaveDao.selectLeavesByEmployeeNumMonth(employeeNum, start.getTime(), end.getTime());
+    }
 
     @Override
     public List<Leave> getUnckeckLeaves() {
